@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Wellness Assistant | AI Health Companion{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="eyebrow">DEMO WELLNESS ASSISTANT</p>
+        <h1>Ask a wellness question</h1>
+        <p>Get simple, general guidance about everyday healthy habits. Not a diagnosis or medical advice.</p>
+    </div>
+</section>
+
+<section class="section compact wellness-chat-section">
+    <div class="container chat-shell">
+        <div id="chat-messages" class="chat-messages" aria-live="polite">
+            <div class="message assistant-message">Hello! I can share general wellness education about sleep, hydration, activity, eating habits, and stress management. What would you like to explore?</div>
+        </div>
+        <div class="suggestions">
+            <button type="button">How can I improve my sleep?</button>
+            <button type="button">What are healthy hydration habits?</button>
+            <button type="button">How can I manage stress?</button>
+            <button type="button">How can I be more active?</button>
+        </div>
+        <form id="wellness-form" class="chat-input">
+            <label class="sr-only" for="wellness-message">Your wellness question</label>
+            <input id="wellness-message" name="message" maxlength="800" placeholder="Type a general wellness question..." required>
+            <button class="button button-primary">Send</button>
+        </form>
+    </div>
+</section>
+
+<section class="wellness-safety-section" aria-label="Safety reminder">
+    <div class="container">
+        <aside class="wellness-safety-reminder">
+            <span class="wellness-safety-icon" aria-hidden="true">⚠</span>
+            <p><strong>Safety first.</strong> For severe chest pain, severe breathing difficulty, unconsciousness, severe confusion, uncontrolled bleeding, or another urgent concern, seek immediate professional or emergency medical care.</p>
+            <a href="{{ url_for('emergency') }}">View safety information →</a>
+        </aside>
+    </div>
+</section>
+{% endblock %}

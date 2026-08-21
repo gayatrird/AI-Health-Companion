@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}AI Health Companion | Wellness Support{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <p class="eyebrow">HEALTH AWARENESS · WELLNESS SUPPORT · SDG 3</p>
+            <h1>Your Health. Your Questions. <span>Your Well-being.</span></h1>
+            <p class="hero-text">An AI-powered wellness companion that helps you understand common symptoms, build healthier habits, and know when to seek professional care.</p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="{{ url_for('symptom_checker') }}">Check Symptoms <span aria-hidden="true">→</span></a>
+                <a class="button button-secondary" href="{{ url_for('wellness') }}">Take Wellness Check</a>
+            </div>
+            <p class="hero-disclaimer"><span aria-hidden="true">ⓘ</span> Educational information only. This tool does not diagnose or replace professional medical advice.</p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+            <div class="orb orb-one"></div><div class="orb orb-two"></div>
+            <div class="health-card main-health-card">
+                <div class="card-top"><span class="pulse-icon">♥</span><span class="status-dot">Wellness first</span></div>
+                <p class="small-label">DAILY WELLNESS</p>
+                <p class="wellness-value">A healthier <strong>you</strong></p>
+                <div class="progress-track"><span></span></div>
+                <div class="mini-stats"><span>Sleep <b>✓</b></span><span>Hydrate <b>✓</b></span><span>Move <b>✓</b></span></div>
+            </div>
+            <div class="health-card floating-card"><span>✦</span><div><small>SMART SUPPORT</small><br>Simple, safe guidance</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="features">
+    <div class="container">
+        <div class="section-heading center-text">
+            <p class="eyebrow">DESIGNED FOR EVERYDAY WELL-BEING</p>
+            <h2>Helpful support, at every step</h2>
+            <p>Explore clear, general health information and practical wellness tools in one friendly place.</p>
+        </div>
+        <div class="feature-grid">
+            <article class="feature-card"><div class="feature-icon blue">⌕</div><h3>Symptom Checker</h3><p>Understand common symptoms through simple educational guidance.</p><a href="{{ url_for('symptom_checker') }}">Explore <span>→</span></a></article>
+            <article class="feature-card"><div class="feature-icon green">✦</div><h3>AI Health Assistant</h3><p>Ask general health and wellness questions in natural language.</p><a href="{{ url_for('wellness') }}">Explore <span>→</span></a></article>
+            <article class="feature-card"><div class="feature-icon purple">◔</div><h3>Wellness Assessment</h3><p>Evaluate sleep, hydration, exercise, nutrition and stress habits.</p><a href="{{ url_for('wellness') }}">Explore <span>→</span></a></article>
+            <article class="feature-card"><div class="feature-icon orange">↗</div><h3>Habit Tracker</h3><p>Build positive habits and view your daily wellness progress.</p><a href="{{ url_for('habits') }}">Explore <span>→</span></a></article>
+            <article class="feature-card"><div class="feature-icon red">!</div><h3>Safety Guidance</h3><p>Identify predefined warning signs and receive guidance to seek professional care.</p><a href="{{ url_for('symptom_checker') }}">Learn more <span>→</span></a></article>
+        </div>
+    </div>
+</section>
+
+<section class="section how-section">
+    <div class="container">
+        <div class="section-heading"><p class="eyebrow">SIMPLE AND SUPPORTIVE</p><h2>How it works</h2></div>
+        <div class="steps-grid">
+            <article class="step"><span class="step-number">01</span><h3>Share</h3><p>Describe your symptoms or answer wellness questions.</p></article>
+            <article class="step"><span class="step-number">02</span><h3>Understand</h3><p>The system processes your information with safety in mind.</p></article>
+            <article class="step"><span class="step-number">03</span><h3>Learn</h3><p>Receive general educational guidance and wellness recommendations.</p></article>
+            <article class="step"><span class="step-number">04</span><h3>Stay safe</h3><p>If warning signs are detected, receive appropriate safety guidance.</p></article>
+        </div>
+    </div>
+</section>
+
+<section class="section sdg-section" id="sdg3">
+    <div class="container sdg-grid">
+        <div class="sdg-badge"><span>3</span><p>GOOD HEALTH<br>&amp; WELL-BEING</p></div>
+        <div><p class="eyebrow">OUR PURPOSE</p><h2>Supporting SDG 3 – Good Health &amp; Well-being</h2><p>AI Health Companion promotes health awareness and helps make wellness information easier to access. It encourages preventive habits and timely healthcare-seeking behavior.</p>
+            <div class="purpose-list"><span>✓ Health awareness</span><span>✓ Preventive wellness</span><span>✓ Healthy lifestyle habits</span><span>✓ Accessible health information</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="disclaimer-section">
+    <div class="container disclaimer-box"><div class="disclaimer-symbol" aria-hidden="true">ⓘ</div><div><h2>A note about your health</h2><p>This application provides general educational and wellness information. It is not a medical diagnostic tool and does not replace advice from a qualified healthcare professional. If you have urgent or worrying symptoms, seek professional medical care.</p></div></div>
+</section>
+{% endblock %}

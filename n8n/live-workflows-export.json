@@ -1,0 +1,207 @@
+[
+  {
+    "updatedAt": "2026-08-20T14:45:23.853Z",
+    "createdAt": "2026-08-20T11:06:08.134Z",
+    "id": "dJFZQ6ZPEczUeAVK",
+    "name": "AI Health Companion - Demo Wellness Workflow",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "httpMethod": "POST",
+          "path": "ai-health-companion",
+          "responseMode": "lastNode",
+          "options": {}
+        },
+        "name": "Webhook",
+        "type": "n8n-nodes-base.webhook",
+        "typeVersion": 2,
+        "position": [
+          -784,
+          -32
+        ],
+        "id": "b7e64136-9ad3-4fcd-8e1a-4c08f3c19159",
+        "webhookId": "46d7de9b-4c78-47d2-a9d8-04eecbf2f2a0"
+      },
+      {
+        "parameters": {
+          "jsCode": "const body = $json.body || {};\nif (!body.message && !body.symptoms) throw new Error('Message or symptoms is required');\nreturn [{ json: { ...body, validated: true } }];"
+        },
+        "name": "Validate Input",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -544,
+          -32
+        ],
+        "id": "6d62d25d-904e-42fa-994f-fdf1ed0c8374"
+      },
+      {
+        "parameters": {
+          "jsCode": "const raw = $json.message ?? $json.body?.message ?? $json.symptoms ?? \"\";\n\nconst text = String(raw)\n  .trim()\n  .toLowerCase()\n  .replace(/\\s+/g, \" \");\n\nconst flags = [\n  \"severe chest pain\",\n  \"severe difficulty breathing\",\n  \"unconscious\",\n  \"severe bleeding\"\n];\n\nconst matched = flags.filter(flag => text.includes(flag));\n\nreturn [{\n  json: {\n    ...$json,\n    emergency: matched.length > 0,\n    matched_flags: matched\n  }\n}];"
+        },
+        "name": "Safety Check",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -336,
+          -32
+        ],
+        "id": "74bb84ea-48f9-4858-8366-9c93683c2bc3"
+      },
+      {
+        "parameters": {
+          "conditions": {
+            "options": {
+              "caseSensitive": true,
+              "leftValue": "",
+              "typeValidation": "strict",
+              "version": 2
+            },
+            "conditions": [
+              {
+                "id": "63ab5a45-c9b4-4e4d-ad13-c64dc8617350",
+                "leftValue": "={{ String($json.emergency) }}",
+                "rightValue": "true",
+                "operator": {
+                  "type": "string",
+                  "operation": "equals"
+                }
+              }
+            ],
+            "combinator": "and"
+          },
+          "options": {}
+        },
+        "name": "Emergency?",
+        "type": "n8n-nodes-base.if",
+        "typeVersion": 2,
+        "position": [
+          -112,
+          -32
+        ],
+        "id": "63ab5a45-c9b4-4e4d-ad13-c64dc8617350"
+      },
+      {
+        "parameters": {
+          "jsCode": "return [{json:{risk_level:'EMERGENCY / SEEK IMMEDIATE CARE', guidance:'Seek immediate professional or emergency medical care. Do not rely on this workflow for emergency assessment.', event_logged:true}}];"
+        },
+        "name": "Emergency Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          112,
+          -128
+        ],
+        "id": "b31cccc9-6d79-4ae5-bd0f-3c84959c2b4d"
+      },
+      {
+        "parameters": {
+          "jsCode": "// Optional future node: call IBM watsonx using n8n credentials.\n// event_logged represents the later database or audit-log step.\nreturn [{json:{risk_level:'GENERAL WELLNESS GUIDANCE', guidance:'Demo response: provide safe, general educational wellness information only.', event_logged:true}}];"
+        },
+        "name": "Demo or AI Response",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          112,
+          64
+        ],
+        "id": "3fad61a6-9200-48ca-9405-6c798772873e"
+      }
+    ],
+    "connections": {
+      "Webhook": {
+        "main": [
+          [
+            {
+              "node": "Validate Input",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Validate Input": {
+        "main": [
+          [
+            {
+              "node": "Safety Check",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Safety Check": {
+        "main": [
+          [
+            {
+              "node": "Emergency?",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Emergency?": {
+        "main": [
+          [
+            {
+              "node": "Emergency Response",
+              "type": "main",
+              "index": 0
+            }
+          ],
+          [
+            {
+              "node": "Demo or AI Response",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "binaryMode": "separate",
+      "availableInMCP": false
+    },
+    "staticData": null,
+    "meta": null,
+    "nodeGroups": [],
+    "pinData": {},
+    "versionId": "88795de3-99d9-40b2-84a8-c552ca0ac540",
+    "activeVersionId": "88795de3-99d9-40b2-84a8-c552ca0ac540",
+    "versionCounter": 5,
+    "triggerCount": 1,
+    "sourceWorkflowId": null,
+    "tags": [],
+    "shared": [
+      {
+        "updatedAt": "2026-08-20T11:06:08.140Z",
+        "createdAt": "2026-08-20T11:06:08.140Z",
+        "role": "workflow:owner",
+        "workflowId": "dJFZQ6ZPEczUeAVK",
+        "projectId": "F3g3IndAx6nT9hIa",
+        "project": {
+          "updatedAt": "2026-08-19T18:33:11.487Z",
+          "createdAt": "2026-08-19T18:21:05.156Z",
+          "id": "F3g3IndAx6nT9hIa",
+          "name": "Gayatri Dyavanapalli <gayatrirsd@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "customTelemetryTags": [],
+          "creatorId": "17e9fedd-3c72-40ba-bba5-85d00c2c1fca"
+        }
+      }
+    ],
+    "versionMetadata": {
+      "name": "AI Health Companion Emergency String Fix",
+      "description": "Fixed n8n Emergency? condition to compare a normalized string value and avoid strict boolean type errors."
+    }
+  }
+]

@@ -1,0 +1,14 @@
+# Virtual environment and secrets
+venv/
+.env
+serviceAccountKey.json
+firebase-service-account*.json
+
+# Python files
+__pycache__/
+*.pyc
+
+# Local data and editor files
+database/*.db
+.vscode/
+.DS_Store

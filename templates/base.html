@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Health Companion - educational health and wellness support.">
+    <title>{% block title %}AI Health Companion{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar container" aria-label="Main navigation">
+            <a class="brand navbar-brand" href="{{ url_for('home') }}" aria-label="AI Health Companion home">
+                <span class="navbar-logo" aria-hidden="true">
+                    <svg viewBox="0 0 40 40" focusable="false">
+                        <path d="M20 31.5S8.5 24.7 8.5 15.8c0-4.2 3-7.3 7-7.3 2.2 0 3.9 1 4.5 2.4.6-1.4 2.3-2.4 4.5-2.4 4 0 7 3.1 7 7.3 0 8.9-11.5 15.7-11.5 15.7Z"/>
+                        <path class="logo-circuit" d="M26.5 7.2V4.5m0 0h3m-3 0h-2.4M31.4 10.2h2.2m-5.2 4.1 1.7 1.7"/>
+                        <circle class="logo-node" cx="29.5" cy="4.5" r="1.6"/>
+                    </svg>
+                </span>
+                <span class="brand-text">AI Health Companion</span>
+            </a>
+
+            <button class="menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links">
+                <a class="{% if request.path == url_for('home') %}is-active{% endif %}" href="{{ url_for('home') }}">Home</a>
+                <a class="{% if request.path == url_for('symptom_checker') %}is-active{% endif %}" href="{{ url_for('symptom_checker') }}">Symptom Checker</a>
+                <a class="{% if request.path == url_for('wellness') %}is-active{% endif %}" href="{{ url_for('wellness') }}">Wellness Check</a>
+                <a class="{% if request.path == url_for('wellness') %}is-active{% endif %}" href="{{ url_for('wellness') }}">AI Assistant</a>
+                <a class="{% if request.path == url_for('habits') %}is-active{% endif %}" href="{{ url_for('habits') }}">Habit Tracker</a>
+                <a class="{% if request.path == url_for('dashboard') %}is-active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="{% if request.path == url_for('health_info') %}is-active{% endif %}" href="{{ url_for('health_info') }}">Health Info</a>
+                <a class="{% if request.path == url_for('emergency') %}is-active{% endif %}" href="{{ url_for('emergency') }}">Safety</a>
+                <a class="{% if request.path == url_for('feedback') %}is-active{% endif %}" href="{{ url_for('feedback') }}">Feedback</a>
+                <a class="auth-guest nav-login {% if request.path == url_for('login') %}is-active{% endif %}" href="{{ url_for('login') }}">Login</a>
+                <a class="auth-guest nav-signup" href="{{ url_for('register') }}">Sign Up</a>
+                <span class="auth-user user-profile" hidden>
+                    <span class="user-avatar" aria-hidden="true"></span>
+                    <span class="user-name" title=""></span>
+                </span>
+                <button class="auth-user nav-logout" type="button" hidden>Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div>
+                <a class="brand footer-brand" href="{{ url_for('home') }}" aria-label="AI Health Companion home">
+                    <span class="navbar-logo footer-logo" aria-hidden="true">
+                        <svg viewBox="0 0 40 40" focusable="false">
+                            <path d="M20 31.5S8.5 24.7 8.5 15.8c0-4.2 3-7.3 7-7.3 2.2 0 3.9 1 4.5 2.4.6-1.4 2.3-2.4 4.5-2.4 4 0 7 3.1 7 7.3 0 8.9-11.5 15.7-11.5 15.7Z"/>
+                            <path class="logo-circuit" d="M26.5 7.2V4.5m0 0h3m-3 0h-2.4M31.4 10.2h2.2m-5.2 4.1 1.7 1.7"/>
+                            <circle class="logo-node" cx="29.5" cy="4.5" r="1.6"/>
+                        </svg>
+                    </span>
+                    <span>AI Health Companion</span>
+                </a>
+                <p>Supporting informed, healthy everyday choices.</p>
+            </div>
+            <p class="footer-note">Educational wellness support only · SDG 3 – Good Health &amp; Well-being</p>
+        </div>
+    </footer>
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

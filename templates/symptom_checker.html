@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Symptom Checker | AI Health Companion{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="eyebrow">EDUCATIONAL SYMPTOM GUIDANCE</p>
+        <h1>Symptom Checker</h1>
+        <p>Share common symptoms to receive transparent, general guidance. This tool does not diagnose diseases.</p>
+    </div>
+</section>
+
+<section class="section compact">
+    <div class="container two-column">
+        <form id="symptom-form" class="form-card" novalidate>
+            <h2>Tell us what you are experiencing</h2>
+            <p class="form-help">Select the symptoms that best describe how you feel.</p>
+
+            <fieldset aria-describedby="symptoms-help">
+                <legend>Symptoms</legend>
+                <p id="symptoms-help" class="field-helper">Select what you're experiencing.</p>
+                <div class="chip-grid">
+                    {% for symptom in ['Fever','Headache','Cough','Sore throat','Cold','Fatigue','Nausea','Vomiting','Stomach pain','Dizziness','Body pain','Shortness of breath','Chest pain'] %}
+                    <label class="check-chip"><input type="checkbox" name="symptoms" value="{{ symptom }}"><span>{{ symptom }}</span></label>
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <div class="form-row">
+                <label>Age <span class="field-helper">Your age</span><input name="age" type="number" min="0" max="120" placeholder="Optional"></label>
+                <label>Duration <span class="field-helper">How long have you had these symptoms?</span><select name="duration"><option value="">Select duration</option><option>Less than 24 hours</option><option>1–3 days</option><option>More than 3 days</option><option>More than a week</option></select></label>
+            </div>
+            <label>Severity <span class="field-helper">How severe are the symptoms?</span><select name="severity"><option value="Mild">Mild</option><option value="Moderate">Moderate</option><option value="Severe">Severe</option></select></label>
+            <label>Other symptoms <span class="field-helper">Add anything important that was not listed above.</span><textarea name="other_symptoms" rows="4" placeholder="Example: I have had a mild headache and feel tired since yesterday."></textarea></label>
+
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Analyze Symptoms</button>
+                <button class="button button-secondary" type="reset">Clear</button>
+            </div>
+            <p class="symptom-disclaimer">Educational information only — this tool does not diagnose or replace professional medical advice.</p>
+
+            <section id="symptom-result" class="symptom-result" tabindex="-1" aria-live="polite" aria-label="Symptom checker result">
+                <div class="result-placeholder">
+                    <span class="result-placeholder-icon" aria-hidden="true">✦</span>
+                    <div><h3>Your Result</h3><p>Your result will appear here after you submit your symptoms.</p></div>
+                </div>
+            </section>
+        </form>
+
+        <aside class="safety-panel">
+            <span class="safety-icon" aria-hidden="true">⚠</span>
+            <h2>Safety first</h2>
+            <p>For severe chest pain, severe breathing difficulty, unconsciousness, severe confusion, uncontrolled bleeding, or another urgent concern, seek immediate professional or emergency medical care.</p>
+            <a href="{{ url_for('emergency') }}">View safety information →</a>
+        </aside>
+    </div>
+</section>
+{% endblock %}

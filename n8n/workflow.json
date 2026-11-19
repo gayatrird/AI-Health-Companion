@@ -1,143 +1,144 @@
-{
-  "name": "AI Health Companion - Demo Wellness Workflow",
-  "nodes": [
-    {
-      "parameters": {
-        "path": "ai-health-companion",
-        "httpMethod": "POST",
-        "responseMode": "lastNode"
-      },
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        260,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const body = $json.body || {};\nif (!body.message && !body.symptoms) throw new Error('Message or symptoms is required');\nreturn [{ json: { ...body, validated: true } }];"
-      },
-      "name": "Validate Input",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        500,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const rawMessage = String($json.message ?? $json.body?.message ?? '');\nconst rawSymptoms = String($json.symptoms ?? $json.body?.symptoms ?? '');\nconst normalizedText = `${rawMessage} ${rawSymptoms}`\n  .trim()\n  .toLowerCase()\n  .replace(/\\s+/g, ' ');\n\nconst emergencyPhrases = [\n  'severe chest pain',\n  'severe difficulty breathing',\n  'unconscious',\n  'severe bleeding'\n];\n\nconst emergency = emergencyPhrases.some(phrase => normalizedText.includes(phrase));\nreturn [{ json: { ...$json, normalized_text: normalizedText, emergency } }];"
-      },
-      "name": "Safety Check",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        720,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "string": [
-            {
-              "value1": "={{ String($json.emergency) }}",
-              "operation": "equals",
-              "value2": "true"
-            }
-          ]
-        }
-      },
-      "name": "Emergency?",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2,
-      "position": [
-        940,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "return [{json:{risk_level:'EMERGENCY / SEEK IMMEDIATE CARE', guidance:'Seek immediate professional or emergency medical care. Do not rely on this workflow for emergency assessment.', event_logged:true}}];"
-      },
-      "name": "Emergency Response",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1160,
-        210
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "// Optional future node: call IBM watsonx using n8n credentials.\n// event_logged represents the later database or audit-log step.\nreturn [{json:{risk_level:'GENERAL WELLNESS GUIDANCE', guidance:'Demo response: provide safe, general educational wellness information only.', event_logged:true}}];"
-      },
-      "name": "Demo or AI Response",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        1160,
-        400
-      ]
-    }
-  ],
-  "connections": {
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Validate Input",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Validate Input": {
-      "main": [
-        [
-          {
-            "node": "Safety Check",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Safety Check": {
-      "main": [
-        [
-          {
-            "node": "Emergency?",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Emergency?": {
-      "main": [
-        [
-          {
-            "node": "Emergency Response",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Demo or AI Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "active": false,
-  "settings": {},
-  "versionId": "demo-template-no-credentials"
+﻿{
+    "name":  "AI Health Companion - Demo Wellness Workflow",
+    "nodes":  [
+                  {
+                      "parameters":  {
+                                         "path":  "ai-health-companion",
+                                         "httpMethod":  "POST",
+                                         "responseMode":  "lastNode"
+                                     },
+                      "name":  "Webhook",
+                      "type":  "n8n-nodes-base.webhook",
+                      "typeVersion":  2,
+                      "position":  [
+                                       260,
+                                       300
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const body = $json.body || {};\nif (!body.message \u0026\u0026 !body.symptoms) throw new Error(\u0027Message or symptoms is required\u0027);\nreturn [{ json: { ...body, validated: true } }];"
+                                     },
+                      "name":  "Validate Input",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       500,
+                                       300
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "const rawMessage = String($json.message ?? $json.body?.message ?? \u0027\u0027);\nconst rawSymptoms = String($json.symptoms ?? $json.body?.symptoms ?? \u0027\u0027);\nconst normalizedText = `${rawMessage} ${rawSymptoms}`\n  .trim()\n  .toLowerCase()\n  .replace(/\\s+/g, \u0027 \u0027);\n\nconst emergencyPhrases = [\n  \u0027severe chest pain\u0027,\n  \u0027severe difficulty breathing\u0027,\n  \u0027unconscious\u0027,\n  \u0027severe bleeding\u0027\n];\n\nconst emergency = emergencyPhrases.some(phrase =\u003e normalizedText.includes(phrase));\nreturn [{ json: { ...$json, normalized_text: normalizedText, emergency } }];"
+                                     },
+                      "name":  "Safety Check",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       720,
+                                       300
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "conditions":  {
+                                                            "boolean":  [
+                                                                            {
+                                                                                "value1":  "={{ $json.emergency === true }}",
+                                                                                "operation":  "isTrue"
+                                                                            }
+                                                                        ]
+                                                        }
+                                     },
+                      "name":  "Emergency?",
+                      "type":  "n8n-nodes-base.if",
+                      "typeVersion":  2,
+                      "position":  [
+                                       940,
+                                       300
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "return [{json:{risk_level:\u0027EMERGENCY / SEEK IMMEDIATE CARE\u0027, guidance:\u0027Seek immediate professional or emergency medical care. Do not rely on this workflow for emergency assessment.\u0027, event_logged:true}}];"
+                                     },
+                      "name":  "Emergency Response",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1160,
+                                       210
+                                   ]
+                  },
+                  {
+                      "parameters":  {
+                                         "jsCode":  "// Optional future node: call IBM watsonx using n8n credentials.\n// event_logged represents the later database or audit-log step.\nreturn [{json:{risk_level:\u0027GENERAL WELLNESS GUIDANCE\u0027, guidance:\u0027Demo response: provide safe, general educational wellness information only.\u0027, event_logged:true}}];"
+                                     },
+                      "name":  "Demo or AI Response",
+                      "type":  "n8n-nodes-base.code",
+                      "typeVersion":  2,
+                      "position":  [
+                                       1160,
+                                       400
+                                   ]
+                  }
+              ],
+    "connections":  {
+                        "Webhook":  {
+                                        "main":  [
+                                                     [
+                                                         {
+                                                             "node":  "Validate Input",
+                                                             "type":  "main",
+                                                             "index":  0
+                                                         }
+                                                     ]
+                                                 ]
+                                    },
+                        "Validate Input":  {
+                                               "main":  [
+                                                            [
+                                                                {
+                                                                    "node":  "Safety Check",
+                                                                    "type":  "main",
+                                                                    "index":  0
+                                                                }
+                                                            ]
+                                                        ]
+                                           },
+                        "Safety Check":  {
+                                             "main":  [
+                                                          [
+                                                              {
+                                                                  "node":  "Emergency?",
+                                                                  "type":  "main",
+                                                                  "index":  0
+                                                              }
+                                                          ]
+                                                      ]
+                                         },
+                        "Emergency?":  {
+                                           "main":  [
+                                                        [
+                                                            {
+                                                                "node":  "Emergency Response",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ],
+                                                        [
+                                                            {
+                                                                "node":  "Demo or AI Response",
+                                                                "type":  "main",
+                                                                "index":  0
+                                                            }
+                                                        ]
+                                                    ]
+                                       }
+                    },
+    "active":  false,
+    "settings":  {
+
+                 },
+    "versionId":  "demo-template-no-credentials"
 }

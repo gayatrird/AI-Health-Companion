@@ -58,16 +58,17 @@
               "caseSensitive": true,
               "leftValue": "",
               "typeValidation": "strict",
-              "version": 2
+              "version": 1
             },
             "conditions": [
               {
-                "id": "63ab5a45-c9b4-4e4d-ad13-c64dc8617350",
-                "leftValue": "={{ String($json.emergency) }}",
-                "rightValue": "true",
+                "id": "d8b2da2e-b979-4772-ae0a-da3440632779",
+                "leftValue": "=={{ $json.emergency }}",
+                "rightValue": "",
                 "operator": {
-                  "type": "string",
-                  "operation": "equals"
+                  "type": "boolean",
+                  "operation": "true",
+                  "singleValue": true
                 }
               }
             ],
@@ -200,8 +201,8 @@
       }
     ],
     "versionMetadata": {
-      "name": "AI Health Companion Emergency String Fix",
-      "description": "Fixed n8n Emergency? condition to compare a normalized string value and avoid strict boolean type errors."
+      "name": "AI Health Companion Safety Workflow",
+      "description": "Updated emergency detection for severe chest pain, severe difficulty breathing, unconsciousness, and severe bleeding."
     }
   }
 ]

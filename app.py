@@ -12,8 +12,9 @@ from services.wellness_assistant import answer_wellness_question
 
 def create_app(test_config=None):
     app = Flask(__name__)
+    default_db = "/tmp/health.db" if os.getenv("VERCEL") else "database/health.db"
     app.config.from_mapping(
-        DATABASE="database/health.db",
+        DATABASE=os.getenv("DATABASE", default_db),
         AI_MODE=os.getenv("AI_MODE", "mock").lower(),
         N8N_WEBHOOK_URL=os.getenv("N8N_WEBHOOK_URL", "http://localhost:5678/webhook/ai-health-companion"),
     )

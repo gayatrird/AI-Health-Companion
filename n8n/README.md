@@ -39,14 +39,3 @@ existing chat interface. If n8n is stopped, inactive, unreachable, or returns
 invalid data, Flask uses the existing local demo response safely.
 
 This workflow is a learning architecture, not an emergency assessment system.
-
-## Fast repair for n8n strict-type error
-
-If the published workflow reports `Wrong type: "true" is a string but was expected to be a boolean` in **Emergency?**, import the updated `workflow.json` (or `live-workflows-export.json`) and publish/activate the imported workflow. The `Emergency?` node now compares `String($json.emergency)` to the string `true`, which avoids the strict boolean mismatch seen in n8n 2.x.
-
-After publishing, verify with:
-
-```powershell
-Invoke-RestMethod -Uri "http://localhost:5678/webhook/ai-health-companion" -Method POST -ContentType "application/json" -Body '{"message":"I have severe chest pain"}'
-Invoke-RestMethod -Uri "http://localhost:5678/webhook/ai-health-companion" -Method POST -ContentType "application/json" -Body '{"message":"How can I improve my sleep?"}'
-```
